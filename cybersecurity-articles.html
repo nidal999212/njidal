@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المقالات العلمية والأمن السيبراني</title>
+    <style>
+        :root {
+            --primary-color: #2980b9;
+            --secondary-color: #1c2833;
+            --accent-color: #e74c3c;
+            --light-color: #f5f5f5;
+            --dark-color: #333;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--secondary-color), #0a2942);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-left: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-right: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-links a.active {
+            background-color: var(--primary-color);
+        }
+        
+        .search-container {
+            display: flex;
+            margin: 1rem 0;
+        }
+        
+        .search-input {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 30px 0 0 30px;
+            outline: none;
+            font-size: 1rem;
+        }
+        
+        .search-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        /* المحتوى الرئيسي */
+        .main-content {
+            display: flex;
+            margin: 2rem 0;
+            gap: 2rem;
+        }
+        
+        .articles-container {
+            flex: 3;
+        }
+        
+        .sidebar {
+            flex: 1;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        /* تصميم المقالات */
+        .article-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .article-image {
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            color: #888;
+        }
+        
+        .article-content {
+            padding: 1.5rem;
+        }
+        
+        .article-tag {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .article-tag.security {
+            background-color: var(--accent-color);
+        }
+        
+        .article-tag.science {
+            background-color: var(--success-color);
+        }
+        
+        .article-title {
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+            color: var(--secondary-color);
+        }
+        
+        .article-excerpt {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #888;
+        }
+        
+        .read-more {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .read-more:hover {
+            background-color: #1c6ca9;
+        }
+        
+        /* القائمة الجانبية */
+        .sidebar-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .sidebar-title {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .categories-list {
+            list-style: none;
+        }
+        
+        .categories-list li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .categories-list a {
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .categories-list a:hover {
+            color: var(--primary-color);
+        }
+        
+        .category-count {
+            background-color: #eee;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .popular-post {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        
+        .post-thumbnail {
+            width: 60px;
+            height: 60px;
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            margin-left: 1rem;
+            color: #888;
+        }
+        
+        .post-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .post-info a {
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .post-info a:hover {
+            color: var(--primary-color);
+        }
+        
+        .post-date {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        .newsletter-form {
+            margin-top: 1rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .form-button {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .form-button:hover {
+            background-color: #1c6ca9;
+        }
+        
+        /* تذييل الصفحة */
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid #444;
+            color: #bbb;
+        }
+        
+        .social-links {
+            display: flex;
+            list-style: none;
+            margin: 1rem 0;
+            justify-content: center;
+        }
+        
+        .social-links li {
+            margin-left: 15px;
+        }
+        
+        .social-links a {
+            color: #bbb;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: white;
+        }
+        
+        /* صفحة المقال الكامل */
+        .full-article {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .article-header {
+            margin-bottom: 2rem;
+        }
+        
+        .article-title-large {
+            font-size: 2.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .article-meta-large {
+            display: flex;
+            align-items: center;
+            color: #777;
+            margin-bottom: 1.5rem;
+        }
+        
+        .author-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 10px;
+            color: #777;
+            font-weight: bold;
+        }
+        
+        .article-date {
+            margin-right: 20px;
+        }
+        
+        .article-image-large {
+            width: 100%;
+            height: 400px;
+            background-color: #eee;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 6rem;
+            color: #777;
+        }
+        
+        .article-body {
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 2rem;
+        }
+        
+        .article-body p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .article-body h2 {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            margin: 2rem 0 1rem;
+        }
+        
+        .article-body h3 {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .article-body ul, .article-body ol {
+            margin-bottom: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        
+        .article-body li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .article-image-caption {
+            text-align: center;
+            color: #777;
+            font-style: italic;
+            margin-top: -1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-box {
+            background-color: #f0f7fb;
+            border-right: 5px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+        
+        .warning-box {
+            background-color: #fff5eb;
+            border-right: 5px solid var(--warning-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+        
+        .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .share-buttons {
+            display: flex;
+            margin-bottom: 2rem;
+        }
+        
+        .share-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 15px;
+            border-radius: 4px;
+            margin-left: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .share-facebook {
+            background-color: #3b5998;
+        }
+        
+        .share-twitter {
+            background-color: #1da1f2;
+        }
+        
+        .share-linkedin {
+            background-color: #0077b5;
+        }
+        
+        .related-articles {
+            margin-top: 3rem;
+        }
+        
+        .related-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        /* تجاوب الموقع */
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                order: -1;
+            }
+            
+            .article-title-large {
+                font-size: 1.8rem;
+            }
+            
+            .article-image-large {
+                height: 300px;
+            }
+            
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🔐</span>
+                المقالات العلمية والأمن السيبراني
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="#" class="active">المقالات</a></li>
+                <li><a href="#">الأمن السيبراني</a></li>
+                <li><a href="#">التقنية</a></li>
+                <li><a href="#">العلوم</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="ابحث عن مقالات...">
+            <button class="search-button">بحث</button>
+        </div>
+
+        <div class="main-content">
+            <div class="articles-container">
+                <!-- مقال كامل -->
+                <div class="full-article">
+                    <div class="article-header">
+                        <span class="article-tag security">الأمن السيبراني</span>
+                        <h1 class="article-title-large">أساسيات الأمن السيبراني: حماية نفسك في العالم الرقمي</h1>
+                        <div class="article-meta-large">
+                            <div class="author-info">
+                                <div class="author-avatar">أ</div>
+                                <span>أحمد الرياحي</span>
+                            </div>
+                            <div class="article-date">9 أبريل 2025</div>
+                        </div>
+                    </div>
+                    
+                    <div class="article-image-large">🔒</div>
+                    <p class="article-image-caption">الأمن السيبراني: حماية المعلومات الرقمية من التهديدات المحتملة</p>
+                    
+                    <div class="article-body">
+                        <p>في عصر المعلومات الذي نعيشه اليوم، أصبح الوجود الرقمي جزءاً لا يتجزأ من حياتنا اليومية. نقوم بإجراء المعاملات المصرفية، وتخزين الملفات الشخصية، والتواصل مع الآخرين، وإدارة أعمالنا عبر الإنترنت. ومع تزايد اعتمادنا على التكنولوجيا، تزداد أهمية حماية معلوماتنا وبياناتنا من التهديدات السيبرانية.</p>
+                        
+                        <p>في هذا المقال، سنقدم لكم دليلاً شاملاً حول أساسيات الأمن السيبراني وكيفية حماية أنفسكم في العالم الرقمي.</p>
+                        
+                        <h2>ما هو الأمن السيبراني؟</h2>
+                        
+                        <p>الأمن السيبراني هو مجموعة من التقنيات والعمليات والممارسات المصممة لحماية الشبكات والأجهزة والبرامج والبيانات من الهجمات والأضرار والوصول غير المصرح به. يتضمن ذلك حماية المعلومات الشخصية والمالية والحساسة من القرصنة والاختراق.</p>
+                        
+                        <div class="info-box">
+                            <strong>حقيقة هامة:</strong> وفقاً لتقرير من مركز أبحاث الأمن السيبراني العالمي، فإن هجوماً إلكترونياً يحدث كل 39 ثانية في العالم، مما يوضح مدى أهمية اتخاذ إجراءات وقائية.
+                        </div>
+                        
+                        <h2>تهديدات الأمن السيبراني الشائعة</h2>
+                        
+                        <p>قبل أن نتعمق في كيفية حماية أنفسنا، من المهم فهم أنواع التهديدات التي قد نواجهها:</p>
+                        
+                        <h3>1. هجمات التصيد الاحتيالي (Phishing)</h3>
+                        
+                        <p>هذه هي من أكثر الهجمات شيوعاً، حيث يقوم المهاجمون بإرسال رسائل بريد إلكتروني أو رسائل نصية تبدو وكأنها من مصادر موثوقة لخداع المستخدمين وجعلهم يكشفون عن معلوماتهم الشخصية أو المالية أو بيانات الدخول.</p>
+                        
+                        <h3>2. البرامج الضارة (Malware)</h3>
+                        
+                        <p>البرامج الضارة هي برامج مصممة للتسلل إلى جهاز الكمبيوتر وإلحاق الضرر به. تشمل أنواع البرامج الضارة الشائعة:</p>
+                        
+                        <ul>
+                            <li><strong>الفيروسات:</strong> برامج تنسخ نفسها وتنتشر من جهاز إلى آخر</li>
+                            <li><strong>برامج الفدية (Ransomware):</strong> تقوم بتشفير الملفات والمطالبة بفدية لاستعادتها</li>
+                            <li><strong>برامج التجسس (Spyware):</strong> تجمع معلومات عن المستخدم دون علمه</li>
+                            <li><strong>أحصنة طروادة:</strong> برامج تبدو شرعية لكنها تحتوي على شفرات ضارة</li>
+                        </ul>
+                        
+                        <h3>3. هجمات الوسط (Man-in-the-Middle)</h3>
+                        
+                        <p>في هذا النوع من الهجمات، يعترض المهاجم الاتصالات بين طرفين، مما يسمح له بالتنصت على المحادثات أو تغيير البيانات المتبادلة.</p>
+                        
+                        <h3>4. هجمات الحرمان من الخدمة (DDoS)</h3>
+                        
+                        <p>تهدف هذه الهجمات إلى تعطيل الخدمات عبر الإنترنت من خلال إغراق الخوادم بطلبات كثيرة بحيث لا يمكنها تلبية الطلبات المشروعة.</p>
+                        
+                        <div class="warning-box">
+                            <strong>تحذير:</strong> مع تطور التقنيات، تتطور أيضاً أساليب الاحتيال والهجمات الإلكترونية. من المهم البقاء على اطلاع بأحدث التهديدات واتخاذ الإجراءات اللازمة للحماية.
+                        </div>
+                        
+                        <h2>إستراتيجيات أساسية للحماية من التهديدات السيبرانية</h2>
+                        
+                        <h3>1. استخدام كلمات مرور قوية وفريدة</h3>
+                        
+                        <p>كلمة المرور هي خط الدفاع الأول ضد الاختراق. يجب أن تكون كلمات المرور:</p>
+                        
+                        <ul>
+                            <li>طويلة (12 حرفاً على الأقل)</li>
+                            <li>مزيجاً من الأحرف الكبيرة والصغيرة والأرقام والرموز</li>
+                            <li>فريدة لكل حساب (لا تستخدم نفس كلمة المرور لحسابات متعددة)</li>
+                            <li>لا تحتوي على معلومات شخصية سهلة التخمين مثل تاريخ الميلاد أو اسم الحيوان الأليف</li>
+                        </ul>
+                        
+                        <p>من المستحسن استخدام برنامج إدارة كلمات المرور لتخزين كلمات المرور الخاصة بك بأمان وإنشاء كلمات مرور قوية.</p>
+                        
+                        <h3>2. تفعيل المصادقة الثنائية (2FA)</h3>
+                        
+                        <p>المصادقة الثنائية توفر طبقة إضافية من الأمان من خلال طلب عامل ثانٍ للتحقق من هويتك، عادةً ما يكون رمزاً يُرسل إلى هاتفك المحمول. حتى لو تم اختراق كلمة المرور الخاصة بك، فإن المهاجم سيحتاج أيضاً إلى الوصول إلى هاتفك للدخول إلى حسابك.</p>
+                        
+                        <h3>3. تحديث البرامج باستمرار</h3>
+                        
+                        <p>غالباً ما تحتوي تحديثات البرامج على إصلاحات للثغرات الأمنية التي قد يستغلها المهاجمون. تأكد من تحديث نظام التشغيل والبرامج والتطبيقات بانتظام.</p>
+                        
+                        <h3>4. استخدام برامج مكافحة الفيروسات وجدران الحماية</h3>
+                        
+                        <p>برامج مكافحة الفيروسات وجدران الحماية تساعد في حماية جهازك من البرامج الضارة والهجمات. تأكد من تثبيت برنامج موثوق وتحديثه بانتظام.</p>
+                        
+                        <h3>5. التعامل بحذر مع البريد الإلكتروني والروابط</h3>
+                        
+                        <p>توخى الحذر عند فتح رسائل البريد الإلكتروني من مصادر غير معروفة، وتجنب النقر على الروابط أو تنزيل المرفقات المشبوهة. تحقق دائماً من عنوان المرسل وابحث عن علامات التصيد الاحتيالي مثل الأخطاء اللغوية أو العروض التي تبدو جيدة جداً.</p>
+                        
+                        <h3>6. تشفير البيانات</h3>
+                        
+                        <p>التشفير يحول بياناتك إلى رموز لا يمكن قراءتها إلا بواسطة الأشخاص المصرح لهم بالوصول. استخدم التشفير لحماية البيانات الحساسة، خاصة عند نقلها عبر الإنترنت.</p>
+                        
+                        <h3>7. النسخ الاحتياطي للبيانات المهمة</h3>
+                        
+                        <p>قم بعمل نسخ احتياطية منتظمة لبياناتك المهمة واحتفظ بها في مكان آمن. هذا يضمن أنه حتى إذا تعرضت لهجوم (مثل برامج الفدية)، يمكنك استعادة بياناتك دون دفع فدية.</p>
+                        
+                        <h2>الخلاصة</h2>
+                        
+                        <p>الأمن السيبراني ليس مجرد مسؤولية الشركات والمؤسسات الكبيرة، بل هو مسؤولية كل فرد يستخد
